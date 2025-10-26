@@ -1,0 +1,94 @@
+.container {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 20px;
+ max-width: 100%;
+ position: relative;
+}
+
+.video, .canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.video {
+    width: 640px;
+    height: 480px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(59, 130, 246, 0.3);
+}
+
+.canvas {
+    border-radius: 12px;
+    pointer-events: none;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 520px;
+}
+
+.scanButton, .stopButton, .verifyButton {
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 160px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.scanButton {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+}
+
+.scanButton:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+}
+
+.scanButton:disabled {
+    background: #6B7280;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.stopButton {
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    color: white;
+}
+
+.stopButton:hover {
+    background: linear-gradient(135deg, #DC2626, #B91C1C);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+}
+
+.verifyButton {
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
+    color: white;
+}
+
+.verifyButton:hover {
+    background: linear-gradient(135deg, #2563EB, #1D4ED8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+}
+
+.verifyButton:disabled {
+    background: #6B7280;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
