@@ -134,7 +134,8 @@ const StudentPerformanceChart = ({ studentId, studentName, groupId, isOpen, onCl
       grade.final_grade !== null && 
       grade.final_grade !== undefined && 
       grade.final_grade !== '' &&
-      !isNaN(parseFloat(grade.final_grade))
+      !isNaN(parseFloat(grade.final_grade)) &&
+      parseFloat(grade.final_grade) > 0
     );
     
     // SUMAR todas las calificaciones finales para obtener el puntaje total
@@ -143,16 +144,20 @@ const StudentPerformanceChart = ({ studentId, studentName, groupId, isOpen, onCl
       ? numericGrades.reduce((sum, grade) => sum + grade, 0)
       : 0;
     
+    // Calcular el promedio correcto: suma total / número total de tareas
+    const averageGrade = grades.length > 0 ? totalScore / grades.length : 0;
+    
     const totalTasks = grades.length;
     const completedTasks = validGrades.length;
 
     // Debug log para verificar los datos
     console.log('Grades data:', grades);
     console.log('Valid grades:', numericGrades);
-    console.log('Stats calculated:', { totalScore, totalTasks, completedTasks });
+    console.log('Stats calculated:', { totalScore, averageGrade, totalTasks, completedTasks });
 
     return {
-      averageGrade: Math.round(totalScore * 100) / 100, // Mantengo el nombre pero ahora es totalScore
+      totalScore: Math.round(totalScore * 100) / 100,
+      averageGrade: Math.round(averageGrade * 100) / 100,
       totalTasks,
       completedTasks
     };

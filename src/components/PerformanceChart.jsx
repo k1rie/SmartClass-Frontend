@@ -94,38 +94,44 @@ const PerformanceChart = ({ groupId }) => {
         grade.final_grade !== null && 
         grade.final_grade !== undefined && 
         grade.final_grade !== '' &&
-        !isNaN(parseFloat(grade.final_grade))
+        !isNaN(parseFloat(grade.final_grade)) &&
+        parseFloat(grade.final_grade) > 0
       );
       
       // SUMAR todas las calificaciones finales para obtener el puntaje total
       const numericGrades = validGrades.map(grade => parseFloat(grade.final_grade));
       const totalScore = numericGrades.length > 0 
         ? numericGrades.reduce((sum, grade) => sum + grade, 0)
-        : null; // Use null for students with no valid grades
+        : 0; // Use 0 for students with no valid grades
       
-      const performanceLevel = totalScore !== null ? getPerformanceLevel(totalScore) : 'no-data';
+      // Calcular el promedio correcto: suma total / número total de tareas
+      const averageGrade = grades.length > 0 ? totalScore / grades.length : 0;
+      
+      const performanceLevel = averageGrade > 0 ? getPerformanceLevel(averageGrade) : 'no-data';
       
       // Debug log para verificar los datos
       console.log(`Student ${student.nombre}:`, {
         allGrades: grades.map(g => ({ task_name: g.task_name, final_grade: g.final_grade })),
         validGrades: numericGrades,
         totalScore: totalScore,
+        averageGrade: averageGrade,
         completedTasks: validGrades.length,
         totalTasks: grades.length
       });
       
       return {
         ...student,
-        averageGrade: totalScore !== null ? Math.round(totalScore * 100) / 100 : null, // Mantengo el nombre pero ahora es totalScore
+        totalScore: Math.round(totalScore * 100) / 100,
+        averageGrade: Math.round(averageGrade * 100) / 100,
         performanceLevel,
         totalTasks: grades.length,
         completedTasks: validGrades.length
       };
     }).sort((a, b) => {
-      // Sort students with data first, then by total score
-      if (a.averageGrade === null && b.averageGrade === null) return 0;
-      if (a.averageGrade === null) return 1;
-      if (b.averageGrade === null) return -1;
+      // Sort students with data first, then by average grade
+      if (a.averageGrade === 0 && b.averageGrade === 0) return 0;
+      if (a.averageGrade === 0) return 1;
+      if (b.averageGrade === 0) return -1;
       return b.averageGrade - a.averageGrade; // Sort by best performance first
     });
   };
@@ -143,9 +149,9 @@ const PerformanceChart = ({ groupId }) => {
     const strugglingStudents = data.filter(s => s.performanceLevel === 'critical').length;
     const goodStudents = data.filter(s => s.performanceLevel === 'good' || s.performanceLevel === 'excellent').length;
     
-    // Calculate average total score from students with valid grades
-    const studentsWithGrades = data.filter(s => s.averageGrade !== null);
-    const averageTotalScore = studentsWithGrades.length > 0 
+    // Calculate average grade from students with valid grades
+    const studentsWithGrades = data.filter(s => s.averageGrade > 0);
+    const averageGrade = studentsWithGrades.length > 0 
       ? studentsWithGrades.reduce((sum, s) => sum + s.averageGrade, 0) / studentsWithGrades.length 
       : 0;
 
@@ -153,7 +159,7 @@ const PerformanceChart = ({ groupId }) => {
       totalStudents,
       strugglingStudents,
       goodStudents,
-      averageGrade: Math.round(averageTotalScore * 100) / 100
+      averageGrade: Math.round(averageGrade * 100) / 100
     });
   };
 
