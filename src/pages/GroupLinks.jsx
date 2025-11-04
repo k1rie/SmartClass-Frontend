@@ -195,7 +195,7 @@ const GroupLinks = () => {
             <ArrowLeft className="w-4 h-4" />
             <span>Volver a Grupos</span>
           </button>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-col sm:flex-row gap-3">
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-2">
                 Enlaces de Calificaciones
@@ -206,7 +206,7 @@ const GroupLinks = () => {
             </div>
             <Button
               onClick={() => setShowModal(true)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 w-full sm:w-auto justify-center"
             >
               <Plus className="w-4 h-4" />
               Generar Enlace
@@ -271,7 +271,7 @@ const GroupLinks = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center gap-2 mb-4 flex-wrap">
                     <div className="flex-1 p-3 bg-muted rounded-lg border border-border">
                       <code className="text-sm text-foreground break-all">
                         {link.fullLink}
@@ -281,7 +281,7 @@ const GroupLinks = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => copyToClipboard(link.hash, link.fullLink)}
-                      className="flex-shrink-0"
+                      className="flex-shrink-0 w-full sm:w-auto"
                     >
                       {copiedHash === link.hash ? (
                         <>
@@ -299,7 +299,7 @@ const GroupLinks = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => openLink(link.hash)}
-                      className="flex-shrink-0"
+                      className="flex-shrink-0 w-full sm:w-auto"
                     >
                       <ExternalLink className="w-4 h-4 mr-2" />
                       Ver
@@ -308,7 +308,7 @@ const GroupLinks = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => setShowDeleteModal({ isOpen: true, link })}
-                      className="flex-shrink-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                      className="flex-shrink-0 text-destructive hover:text-destructive hover:bg-destructive/10 w-full sm:w-auto"
                       disabled={deletingLinkId === link.id}
                     >
                       {deletingLinkId === link.id ? (

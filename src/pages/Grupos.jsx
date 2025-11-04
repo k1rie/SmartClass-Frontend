@@ -56,26 +56,26 @@ const Grupos = () => {
     <div className="pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
             <h1 className="text-2xl font-bold text-foreground">Grupos</h1>
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap w-full sm:w-auto">
               <button 
                 onClick={() => navigate('/group-links')}
-                className="flex items-center px-4 py-2 text-foreground border-[0.5px] border-accent rounded-md hover:bg-accent/90 transition-colors"
+                className="flex items-center px-4 py-2 text-foreground border-[0.5px] border-accent rounded-md hover:bg-accent/90 transition-colors w-full sm:w-auto justify-center"
               >
                 <Link2 className="w-4 h-4 mr-2" />
                 Enlaces de Calificaciones
               </button>
               <button 
                 onClick={() => navigate('/group-join-requests')}
-                className="flex items-center px-4 py-2 text-foreground border-[0.5px] border-accent rounded-md hover:bg-accent/90 transition-colors"
+                className="flex items-center px-4 py-2 text-foreground border-[0.5px] border-accent rounded-md hover:bg-accent/90 transition-colors w-full sm:w-auto justify-center"
               >
                 <Users className="w-4 h-4 mr-2" />
                 Solicitudes de Ingreso
               </button>
               <button 
                 onClick={() => setShowCreateModal(true)}
-                className="flex items-center px-4 py-2 text-foreground border-[0.5px] border-accent rounded-md hover:bg-accent/90 transition-colors"
+                className="flex items-center px-4 py-2 text-foreground border-[0.5px] border-accent rounded-md hover:bg-accent/90 transition-colors w-full sm:w-auto justify-center"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Nuevo Grupo

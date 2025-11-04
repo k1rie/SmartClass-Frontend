@@ -95,21 +95,21 @@ const GroupJoinRequests = () => {
   return (
     <div className="pt-16 min-h-screen bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
+          <div className="mb-6">
           <button
             onClick={() => navigate("/grupos")}
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Volver a Grupos
           </button>
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center justify-between gap-3 flex-col sm:flex-row">
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-2">Solicitudes de Ingreso</h1>
               <p className="text-muted-foreground">Revisa y gestiona solicitudes enviadas por estudiantes.</p>
             </div>
             <button
               onClick={() => setShowGenerateModal(true)}
-              className="flex items-center px-4 py-2 text-foreground border border-border rounded-md hover:bg-accent/90 transition-colors"
+              className="flex items-center px-4 py-2 text-foreground border border-border rounded-md hover:bg-accent/90 transition-colors w-full sm:w-auto justify-center"
             >
               <Link2 className="w-4 h-4 mr-2" /> Generar enlace de unión
             </button>
@@ -147,13 +147,13 @@ const GroupJoinRequests = () => {
             ) : (
               <div className="space-y-3">
                 {requests.map((r) => (
-                  <div key={r.id} className="flex items-center justify-between p-3 border border-border rounded-md bg-muted/20">
+                  <div key={r.id} className="flex items-center justify-between p-3 border border-border rounded-md bg-muted/20 gap-3 flex-col sm:flex-row">
                     <div>
                       <div className="text-foreground font-medium">{r.apellidos}, {r.nombre}</div>
                       <div className="text-sm text-muted-foreground">{r.correo}</div>
                       <div className="text-xs text-muted-foreground">Enviada: {new Date(r.created_at).toLocaleString()}</div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 w-full sm:w-auto justify-end">
                       <Button
                         size="sm"
                         onClick={() => approve(r.id)}
