@@ -63,9 +63,12 @@ const GroupJoinRequests = () => {
     }
   };
 
+  const getJoinLink = (hash) => `${window.location.origin}/#/join/${hash}`;
+
   const copyLink = () => {
-    if (!generatedLink?.fullLink) return;
-    navigator.clipboard.writeText(generatedLink.fullLink);
+    if (!generatedLink?.hash) return;
+    const fullLink = getJoinLink(generatedLink.hash);
+    navigator.clipboard.writeText(fullLink);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
@@ -219,7 +222,7 @@ const GroupJoinRequests = () => {
                   ) : (
                     <div className="space-y-3">
                       <div className="p-3 bg-muted rounded-lg border border-border">
-                        <code className="text-sm text-foreground break-all">{generatedLink.fullLink}</code>
+                        <code className="text-sm text-foreground break-all">{getJoinLink(generatedLink.hash)}</code>
                       </div>
                       <button
                         onClick={copyLink}

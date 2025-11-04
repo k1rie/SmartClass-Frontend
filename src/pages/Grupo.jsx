@@ -81,9 +81,12 @@ const Grupo = () => {
     }
   };
 
+  const getJoinLink = (hash) => `${window.location.origin}/#/join/${hash}`;
+
   const copyJoinLink = () => {
-    if (!generatedJoinLink?.fullLink) return;
-    navigator.clipboard.writeText(generatedJoinLink.fullLink);
+    if (!generatedJoinLink?.hash) return;
+    const fullLink = getJoinLink(generatedJoinLink.hash);
+    navigator.clipboard.writeText(fullLink);
     setCopiedJoin(true);
     setTimeout(() => setCopiedJoin(false), 1500);
   };
@@ -981,7 +984,7 @@ const Grupo = () => {
                     ) : (
                       <>
                         <div className="p-3 bg-muted rounded-lg border border-border">
-                          <code className="text-sm text-foreground break-all">{generatedJoinLink.fullLink}</code>
+                          <code className="text-sm text-foreground break-all">{getJoinLink(generatedJoinLink.hash)}</code>
                         </div>
                         <Button variant="outline" onClick={copyJoinLink} className="w-full">
                           {copiedJoin ? (<><Check className="w-4 h-4 mr-2" /> Copiado</>) : (<><Copy className="w-4 h-4 mr-2" /> Copiar enlace</>)}
