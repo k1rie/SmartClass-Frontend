@@ -6,7 +6,8 @@ import {
   Layers,
   School,
   Plus,
-  ArrowRight
+  ArrowRight,
+  Link2
 } from "lucide-react";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -57,13 +58,29 @@ const Grupos = () => {
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold text-foreground">Grupos</h1>
-            <button 
-              onClick={() => setShowCreateModal(true)}
-              className="flex items-center px-4 py-2 text-foreground border-[0.5px] border-accent rounded-md hover:bg-accent/90 transition-colors"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Nuevo Grupo
-            </button>
+            <div className="flex gap-3">
+              <button 
+                onClick={() => navigate('/group-links')}
+                className="flex items-center px-4 py-2 text-foreground border-[0.5px] border-accent rounded-md hover:bg-accent/90 transition-colors"
+              >
+                <Link2 className="w-4 h-4 mr-2" />
+                Enlaces de Calificaciones
+              </button>
+              <button 
+                onClick={() => navigate('/group-join-requests')}
+                className="flex items-center px-4 py-2 text-foreground border-[0.5px] border-accent rounded-md hover:bg-accent/90 transition-colors"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                Solicitudes de Ingreso
+              </button>
+              <button 
+                onClick={() => setShowCreateModal(true)}
+                className="flex items-center px-4 py-2 text-foreground border-[0.5px] border-accent rounded-md hover:bg-accent/90 transition-colors"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Nuevo Grupo
+              </button>
+            </div>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

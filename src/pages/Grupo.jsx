@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "../compone
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
-import { Users, Delete, Plus, X, Pencil, Check, FileText, BarChart2, Trash2, Search, Download, Upload, Calendar, ArrowRight, Camera, BarChart3, TrendingUp, Mail } from "lucide-react";
+import { Users, Delete, Plus, X, Pencil, Check, FileText, BarChart2, Trash2, Search, Download, Upload, Calendar, ArrowRight, Camera, BarChart3, TrendingUp, Mail, Link2, Copy } from "lucide-react";
 import { BASE_API_URL } from "../config/constants";
 import Navbar from "../components/Navbar";
 import { useRef } from "react";
@@ -50,6 +50,43 @@ const Grupo = () => {
   const [showPerformanceChart, setShowPerformanceChart] = useState(false);
   const [studentPerformanceModal, setStudentPerformanceModal] = useState({ isOpen: false, studentId: null, studentName: '' });
   const [messageModal, setMessageModal] = useState({ isOpen: false, student: null });
+
+  // Join link generation state
+  const [showJoinLinkModal, setShowJoinLinkModal] = useState(false);
+  const [generatingJoinLink, setGeneratingJoinLink] = useState(false);
+  const [generatedJoinLink, setGeneratedJoinLink] = useState(null);
+  const [copiedJoin, setCopiedJoin] = useState(false);
+
+  const generateJoinLinkForGroup = async () => {
+    try {
+      setGeneratingJoinLink(true);
+      setGeneratedJoinLink(null);
+      const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
+      const res = await fetch(`${BASE_API_URL}/generateJoinLink`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Basic ${credentials}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ groupId: Number(id) })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setGeneratedJoinLink(data.link);
+      }
+    } catch (e) {
+      console.error('Error generando enlace de unión:', e);
+    } finally {
+      setGeneratingJoinLink(false);
+    }
+  };
+
+  const copyJoinLink = () => {
+    if (!generatedJoinLink?.fullLink) return;
+    navigator.clipboard.writeText(generatedJoinLink.fullLink);
+    setCopiedJoin(true);
+    setTimeout(() => setCopiedJoin(false), 1500);
+  };
 
   const removeDuplicates = (data) => {
     if (!Array.isArray(data)) return [];
@@ -903,6 +940,15 @@ const Grupo = () => {
             Exportar Resumen
           </Button>
           <Button 
+            variant="outline" 
+            size="sm" 
+            className="h-9 w-full sm:w-auto"
+            onClick={() => setShowJoinLinkModal(true)}
+          >
+            <Link2 className="w-4 h-4 mr-2" />
+            Generar enlace de unión
+          </Button>
+          <Button 
             variant="destructive" 
             size="sm" 
             className="h-9 w-full sm:w-auto"
@@ -912,6 +958,42 @@ const Grupo = () => {
             Eliminar
           </Button>
         </div>
+
+        {showJoinLinkModal && (
+          <div className="fixed inset-0 z-50">
+            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" />
+            <div className="fixed inset-0 flex items-center justify-center p-4">
+              <Card className="max-w-md w-full relative">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-foreground">Enlace de unión del grupo</CardTitle>
+                    <button onClick={() => { setShowJoinLinkModal(false); setGeneratedJoinLink(null); }} className="text-muted-foreground hover:text-foreground">
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {!generatedJoinLink ? (
+                      <Button onClick={generateJoinLinkForGroup} disabled={generatingJoinLink} className="w-full">
+                        {generatingJoinLink ? (<><Loader className="w-4 h-4 mr-2 animate-spin" /> Generando...</>) : (<><Link2 className="w-4 h-4 mr-2" /> Generar enlace</>)}
+                      </Button>
+                    ) : (
+                      <>
+                        <div className="p-3 bg-muted rounded-lg border border-border">
+                          <code className="text-sm text-foreground break-all">{generatedJoinLink.fullLink}</code>
+                        </div>
+                        <Button variant="outline" onClick={copyJoinLink} className="w-full">
+                          {copiedJoin ? (<><Check className="w-4 h-4 mr-2" /> Copiado</>) : (<><Copy className="w-4 h-4 mr-2" /> Copiar enlace</>)}
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        )}
 
         {/* Students Section */}
         <div className="mb-8">

@@ -2,12 +2,17 @@ import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Landing from "./pages/Landing";
 import Grupos from "./pages/Grupos";
 import Grupo from "./pages/Grupo";
 import Scanner from "./pages/Scanner";
 import Login from "./pages/Login";
 import StudentInfo from "./pages/StudentInfo";
 import FaceRecognition from "./pages/FaceRecognition";
+import GroupLinks from "./pages/GroupLinks";
+import GradesView from "./pages/GradesView";
+import JoinRequest from "./pages/JoinRequest";
+import GroupJoinRequests from "./pages/GroupJoinRequests";
 const PrivateRoute = ({ children }) => {
   const email = localStorage.getItem("email");
   const password = localStorage.getItem("password");
@@ -29,10 +34,14 @@ function App() {
             <Route
               path="/"
               element={
-                <PrivateRoute>
-                  <Navbar />
-                  <Home />
-                </PrivateRoute>
+                (localStorage.getItem("email") && localStorage.getItem("password")) ? (
+                  <PrivateRoute>
+                    <Navbar />
+                    <Home />
+                  </PrivateRoute>
+                ) : (
+                  <Landing />
+                )
               }
             />
             <Route
@@ -80,6 +89,34 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route
+              path="/group-links"
+              element={
+                <PrivateRoute>
+                  <Navbar />
+                  <GroupLinks />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/group-join-requests"
+              element={
+                <PrivateRoute>
+                  <Navbar />
+                  <GroupJoinRequests />
+                </PrivateRoute>
+              }
+            />
+            {/* Ruta pública para ver calificaciones por hash */}
+            <Route
+              path="/grades/:hash"
+              element={<GradesView />}
+            />
+          {/* Ruta pública para solicitar unión a un grupo */}
+          <Route
+            path="/join/:hash"
+            element={<JoinRequest />}
+          />
           </Routes>
         </div>
       </Router>
