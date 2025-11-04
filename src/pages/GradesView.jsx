@@ -84,6 +84,10 @@ const GradesView = () => {
     return null;
   }
 
+  const totalTaskPoints = Array.isArray(data?.tasks)
+    ? data.tasks.reduce((sum, t) => sum + (Number(t.valor) || 0), 0)
+    : 0;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -130,7 +134,7 @@ const GradesView = () => {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -161,6 +165,17 @@ const GradesView = () => {
                   <p className="text-2xl font-bold text-foreground">{data.linkInfo?.accessCount || 0}</p>
                 </div>
                 <TrendingUp className="w-8 h-8 text-foreground opacity-70" />
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Puntos totales</p>
+                  <p className="text-2xl font-bold text-foreground">{totalTaskPoints}</p>
+                </div>
+                <BookOpen className="w-8 h-8 text-foreground opacity-70" />
               </div>
             </CardContent>
           </Card>

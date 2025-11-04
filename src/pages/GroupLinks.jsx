@@ -119,14 +119,17 @@ const GroupLinks = () => {
     }
   };
 
-  const copyToClipboard = (hash, fullLink) => {
+  const getFullLink = (hash) => `${window.location.origin}/#/grades/${hash}`;
+
+  const copyToClipboard = (hash) => {
+    const fullLink = getFullLink(hash);
     navigator.clipboard.writeText(fullLink);
     setCopiedHash(hash);
     setTimeout(() => setCopiedHash(null), 2000);
   };
 
   const openLink = (hash) => {
-    const fullLink = `${window.location.origin}/#/grades/${hash}`;
+    const fullLink = getFullLink(hash);
     window.open(fullLink, "_blank");
   };
 
@@ -274,13 +277,13 @@ const GroupLinks = () => {
                   <div className="flex items-center gap-2 mb-4 flex-wrap">
                     <div className="flex-1 p-3 bg-muted rounded-lg border border-border">
                       <code className="text-sm text-foreground break-all">
-                        {link.fullLink}
+                        {getFullLink(link.hash)}
                       </code>
                     </div>
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => copyToClipboard(link.hash, link.fullLink)}
+                      onClick={() => copyToClipboard(link.hash)}
                       className="flex-shrink-0 w-full sm:w-auto"
                     >
                       {copiedHash === link.hash ? (
