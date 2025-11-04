@@ -40,9 +40,7 @@ const Login = () => {
             localStorage.setItem("email", email);
             localStorage.setItem("password", password);
             succesfull.current.style.display = "block";
-            setTimeout(() => {
-              navigate("/");
-            }, 2000);
+            window.location.hash = "#/";
           } else {
             incorrectText.current.style.display = "block";
             setIncorrectTextValue("Parece que el correo ya esta asociado a una cuenta o el servidor esta tardando más de lo normal");
@@ -66,9 +64,7 @@ const Login = () => {
             localStorage.setItem("email", data.data.email);
             localStorage.setItem("password", data.data.password);
             succesfull.current.style.display = "block";
-            setTimeout(() => {
-              navigate("/");
-            }, 2000);
+            window.location.hash = "#/";
           } else {
             incorrectText.current.style.display = "block";
             setIncorrectTextValue("Credenciales incorrectas");

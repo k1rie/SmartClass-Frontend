@@ -13,14 +13,20 @@ import GroupLinks from "./pages/GroupLinks";
 import GradesView from "./pages/GradesView";
 import JoinRequest from "./pages/JoinRequest";
 import GroupJoinRequests from "./pages/GroupJoinRequests";
-const PrivateRoute = ({ children }) => {
+const isAuthenticated = () => {
   const email = localStorage.getItem("email");
   const password = localStorage.getItem("password");
+  if (!email || !password) return false;
+  if (email === "undefined" || password === "undefined") return false;
+  if (email === "null" || password === "null") return false;
+  if (email.trim() === "" || password.trim() === "") return false;
+  return true;
+};
 
-  if (!email || !password) {
-    return <Navigate to="/login" />;
+const PrivateRoute = ({ children }) => {
+  if (!isAuthenticated()) {
+    return <Navigate to="/landing" replace />;
   }
-
   return children;
 };
 
@@ -30,18 +36,15 @@ function App() {
       <Router>
         <div className="min-h-screen bg-background">
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/landing" element={<Landing />} />
+            <Route path="/login" element={isAuthenticated() ? <Navigate to="/" replace /> : <Login />} />
             <Route
               path="/"
               element={
-                (localStorage.getItem("email") && localStorage.getItem("password")) ? (
-                  <PrivateRoute>
-                    <Navbar />
-                    <Home />
-                  </PrivateRoute>
-                ) : (
-                  <Landing />
-                )
+                <PrivateRoute>
+                  <Navbar />
+                  <Home />
+                </PrivateRoute>
               }
             />
             <Route
@@ -117,6 +120,8 @@ function App() {
             path="/join/:hash"
             element={<JoinRequest />}
           />
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to={isAuthenticated() ? "/" : "/landing"} replace />} />
           </Routes>
         </div>
       </Router>

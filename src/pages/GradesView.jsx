@@ -185,7 +185,7 @@ const GradesView = () => {
                         </span>
                       </th>
                     ))}
-                    <th className="text-center py-3 px-4 font-semibold text-foreground">Promedio</th>
+                    <th className="text-center py-3 px-4 font-semibold text-foreground">Total</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -210,16 +210,8 @@ const GradesView = () => {
                         );
                       })}
                       <td className="text-center py-3 px-4 font-semibold text-foreground">
-                        {student.promedio ? (
-                          <span className={`${
-                            parseFloat(student.promedio) >= 7 
-                              ? 'text-green-600 dark:text-green-400' 
-                              : parseFloat(student.promedio) >= 6 
-                              ? 'text-yellow-600 dark:text-yellow-400' 
-                              : 'text-destructive'
-                          }`}>
-                            {student.promedio}
-                          </span>
+                        {student.total !== undefined && student.total !== null ? (
+                          <span>{student.total}</span>
                         ) : (
                           '-'
                         )}

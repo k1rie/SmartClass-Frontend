@@ -59,6 +59,24 @@ function Landing() {
         </div>
       </section>
 
+      {/* Demo Wi-Fi Info */}
+      <section className="border-b">
+        <div className="mx-auto max-w-6xl px-4 py-10">
+          <Card>
+            <CardHeader>
+              <CardTitle>Prueba Smartclass</CardTitle>
+              <CardDescription>Si quieres probar Smartclass puedes usar la siguiente red</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-1 text-sm">
+                <p><span className="font-medium">Red:</span> Diego's Iphone</p>
+                <p><span className="font-medium">Contraseña:</span> smartclassexposoft123</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* Features */}
       <section id="features" className="border-b">
         <div className="mx-auto max-w-6xl px-4 py-16">
